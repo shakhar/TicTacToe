@@ -1,0 +1,6 @@
+.jumbotron
+  %img#home-logo{src: "assets/images/logo.png"}
+  %h1 Welcome to (TicTacToe)&sup2;
+  %p The best TicTacToe game in the Universe!
+  %p
+    %a.btn.btn-primary.btn-lg{role: "button", href: "About"} About

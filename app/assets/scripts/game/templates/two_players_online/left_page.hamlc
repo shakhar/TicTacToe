@@ -1,0 +1,16 @@
+%img#x-tie{ style: "display: none", src: "assets/images/smallX.png" }
+%img#o-tie{ style: "display: none", src: "assets/images/smallO.png" }
+%img#smallX{ src: "assets/images/smallX.png" }
+%img#smallO{ style: "display: none", src: "assets/images/smallO.png" }
+%span Turn
+
+%button#new-game-btn.btn New Game
+
+#connecting Connecting...
+#connect-failed-msg The server is down, Try again later
+#container
+  #chat-log
+    %h4#log-heading Chat
+    #conversation
+    %input#data
+    %button#data-send.btn.btn-primary Send

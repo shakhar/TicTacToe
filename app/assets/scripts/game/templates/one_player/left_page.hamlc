@@ -1,0 +1,25 @@
+%img#x-tie{ style: "display: none", src: "assets/images/smallX.png" }
+%img#o-tie{ style: "display: none", src: "assets/images/smallO.png" }
+%img#smallX{ src: "assets/images/smallX.png" }
+%img#smallO{ style: "display: none", src: "assets/images/smallO.png" }
+%span Turn
+
+%button#new-game-btn.btn New Game
+
+#level-btn-group.btn-group{ data-toggle: "buttons" }
+  %label.btn.btn-primary.active
+    %input#easy{ type: "radio", name: "options" } Easy
+  %label.btn.btn-primary
+    %input#medium{ type: "radio", name: "options" } Medium
+  %label.btn.btn-primary
+    %input#hard{ type: "radio", name: "options" } Hard
+
+%div
+  %select#level-select.form-control
+    %option{ value: "1" } Level 1
+    %option{ value: "2" } Level 2
+    %option{ value: "3" } Level 3
+    %option{ value: "4" } Level 4
+    %option{ value: "5" } Level 5
+    %option{ value: "6" } Level 6
+    %option{ value: "7" } Level 7

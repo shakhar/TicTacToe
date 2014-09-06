@@ -1,0 +1,93 @@
+@import about
+@import chat
+@import game_board
+@import left_page
+@import loading
+@import modals
+@import right_page
+@import settings
+@import timer
+
+body
+  background: url(../images/background.jpg)
+
+h4
+  display: inline
+  padding-left: 25%
+
+footer
+  clear: both
+  text-align: center
+  color: white
+  font-size: 16px
+  border-top: 2px solid white
+  margin-top: 40px
+  padding-top: 20px
+  padding-bottom: 20px
+
+article
+  font-family: "Trebuchet MS", Helvetica, sans-serif
+  background-color: rgba(255, 255, 255, 0.5)
+  border-radius: 10px
+  width: 85%
+  margin-left: auto
+  margin-right: auto
+  padding: 20px
+  h1
+    text-align: center
+    font-size: 50px
+    padding-bottom: 30px
+  section
+    padding-bottom: 40px
+    font-size: 20px
+    position: relative
+  img
+    height: 450px
+    width: 450px
+    border: 10px ridge white
+    display: table-cell
+    vertical-align: middle
+    margin: auto
+    margin-top: 20px
+
+#logo
+  display: inline
+  width: 80px
+  height: 80px
+  margin-top: -30px
+  margin-left: -26px
+
+.dropdown-menu
+  border: 1px solid white
+  min-width: 141px
+  background-color: #101010
+  border: 1px solid rgba(0, 0, 0, 0.15)
+  li
+    a
+      color: #999999
+      &:hover
+        color: white
+        background-color: #101010
+
+.jumbotron
+  background-color: rgba(196, 196, 196, 0.6)
+  margin-left: 10%
+  margin-right: 10%
+  border-radius: 10px
+
+#home-logo
+  display: none
+
+@media only screen and (min-width: 1100px)
+  #home-logo
+    display: inherit
+    float: right
+    height: 500px
+    width: 500px
+    margin-top: -117px
+    margin-right: -40px
+
+.navbar
+  margin-bottom: 15px
+  background-color: rgba(0,0,0,0)
+  border-color: rgba(0,0,0,0)
