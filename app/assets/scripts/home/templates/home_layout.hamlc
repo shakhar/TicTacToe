@@ -1,6 +1,11 @@
-.jumbotron
-  %img#home-logo{src: "assets/images/logo.png"}
-  %h1 Welcome to (TicTacToe)&sup2;
-  %p The best TicTacToe game in the Universe!
-  %p
-    %a.btn.btn-primary.btn-lg{role: "button", href: "About"} About
+.logo-region
+  #logo-title (Tic Tac Toe)&sup2;
+%ul#home-menu
+  %li
+    %a{ href: "#OnePlayer" } One Player
+  %li
+    %a{ href: "#TwoPlayers" } Two Players
+  %li
+    %a{ href: "#TwoPlayersOnline" } Two Players Online
+  %li
+    %a{ href: "#Instructions" } Instructions

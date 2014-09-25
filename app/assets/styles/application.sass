@@ -1,4 +1,3 @@
-@import about
 @import chat
 @import game_board
 @import left_page
@@ -7,6 +6,7 @@
 @import right_page
 @import settings
 @import timer
+@import fonts
 
 body
   background: url(../images/background.jpg)
@@ -15,40 +15,31 @@ h4
   display: inline
   padding-left: 25%
 
-footer
-  clear: both
-  text-align: center
-  color: white
-  font-size: 16px
-  border-top: 2px solid white
-  margin-top: 40px
-  padding-top: 20px
-  padding-bottom: 20px
-
 article
   font-family: "Trebuchet MS", Helvetica, sans-serif
-  background-color: rgba(255, 255, 255, 0.5)
-  border-radius: 10px
-  width: 85%
-  margin-left: auto
-  margin-right: auto
-  padding: 20px
+  color: wheat
+  padding: 0 6vmin
   h1
     text-align: center
-    font-size: 50px
-    padding-bottom: 30px
+    font-size: 14vmin
+    font-family: 'Walter Turncoat', Helvetica, Sans-serif
+    padding-bottom: 10vmin
   section
-    padding-bottom: 40px
-    font-size: 20px
+    padding-bottom: 10vmin
+    font-size: 4vmin
+    font-family: 'Handlee', Helvetica, Sans-serif
     position: relative
   img
-    height: 450px
-    width: 450px
+    height: 80vmin
+    width: 80vmin
     border: 10px ridge white
     display: table-cell
     vertical-align: middle
     margin: auto
-    margin-top: 20px
+    margin-top: 6vmin
+
+#main-region
+  margin-top: 15vmin
 
 #logo
   display: inline
@@ -69,25 +60,38 @@ article
         color: white
         background-color: #101010
 
-.jumbotron
-  background-color: rgba(196, 196, 196, 0.6)
-  margin-left: 10%
-  margin-right: 10%
-  border-radius: 10px
-
 #home-logo
-  display: none
+  display: inline
+  width: 25%
 
-@media only screen and (min-width: 1100px)
-  #home-logo
-    display: inherit
-    float: right
-    height: 500px
-    width: 500px
-    margin-top: -117px
-    margin-right: -40px
+#logo-title
+  font-family: 'Dancing Script', Georgia, Times, serif
+  font-size: 14vmin
+  text-align: center
+  color: wheat
 
 .navbar
   margin-bottom: 15px
-  background-color: rgba(0,0,0,0)
-  border-color: rgba(0,0,0,0)
+  background-color: rgba(0,0,0,0.8)
+  border-color: rgba(0,0,0,0.8)
+
+.logo-region
+  margin-top: 10px
+
+#home-menu
+  padding-left: 0
+  list-style-type: none 
+  font-size: 6vmin
+  font-family: 'Rancho', Helvetica, Sans-serif
+
+  li
+    padding: 5vh
+    text-align: center
+    
+    a
+      text-decoration: none
+      color: wheat
+    
+    a:hover
+      text-decoration: none
+      color: white

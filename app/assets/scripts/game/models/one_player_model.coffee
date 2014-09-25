@@ -12,7 +12,7 @@
       @validLocation = true
 
     alphaBeta: (validLocation) ->
-      @model.movesLeft = 1000000
+      @movesLeft = 1000000
       if validLocation is true
         @validLocation = true
       else
@@ -95,13 +95,13 @@
               moves2.push [ @validLocation[0], @validLocation[1], i, j ] if subScore is 0
               moves3.push [ @validLocation[0], @validLocation[1], i, j ] if subScore is -1
       if moves1.length > 0
-        @model.movesLeft -= moves1.length
+        @movesLeft -= moves1.length
         return moves.concat moves1
       else if moves2.length > 0 
-        @model.movesLeft -= moves2.length
+        @movesLeft -= moves2.length
         return moves.concat moves2
       else 
-        @model.movesLeft -= moves3.length
+        @movesLeft -= moves3.length
         return moves.concat moves3
 
     isTerminal: (level) ->
@@ -109,7 +109,7 @@
       for i in [0...3]
         for j in [0...3]
           noSpaces = false if @board.table[i][j].val is 0
-      return noSpaces or @isGameOver() or level > @level or @model.movesLeft < 0
+      return noSpaces or @isGameOver() or level > @level or @movesLeft < 0
 
     isGameOver: ->
       Math.abs @boardScore() is 10000

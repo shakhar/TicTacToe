@@ -4,10 +4,13 @@
     initialize: ->
       @autoClicked = false
       @playerNum = 0
-      @timer = new Timer()
       @mode = "two_players_online"
+      @socket = new Chat().start this
       super
 
+    setTimer: ->
+      @timer = new Timer()
+      
     reset: ->
       super
       @playerNum = 0
@@ -24,21 +27,22 @@
       $("#timer").hide()
       $("#player").hide()
 
-    setEvents: ->
+    setBoardEvents: ->
       super
       $(window).on "time_out", =>
-        moves = @model.getMoves @validLocation
+        moves = @gameModel.getMoves @validLocation
         index = Math.floor Math.random() * moves.length
         move = moves[index]
-        parentLocation = @model.parseBackLocation move[0], move[1]
-        location = @model.parseBackLocation move[2], move[3], parentLocation
+        parentLocation = @gameModel.parseBackLocation move[0], move[1]
+        location = @gameModel.parseBackLocation move[2], move[3], parentLocation
         cell = ".#{parentLocation.className.split(" ").join(".")} .#{location.className.split(" ").join(".")}"
         $(cell).click()
 
     handleCellClick: (location) ->
       if @playerNum is @player or @autoClicked
-        if super location, that
-          socket.emit "updateOpponent", parentLocation.className, location.className if @player is @playerNum
+        if super location, this
+          parentLocation = location.parentNode.parentNode.parentNode.parentNode
+          @socket.emit "updateOpponent", parentLocation.className, location.className if @player is @playerNum
           if @autoClicked
             stopLoading()
             @timer.stopTimer()
@@ -47,3 +51,6 @@
             startLoading()
             @timer.startTimer()
       @autoClicked = false if @autoClicked
+
+    getGameModel: ->
+      new GameApp.TwoPlayersOnlineModel    

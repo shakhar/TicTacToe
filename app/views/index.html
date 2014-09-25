@@ -4,11 +4,14 @@
   <title>TicTacToe</title>
   
   <link rel="stylesheet" type="text/css" href="lib/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="lib/fuelux.css">
   <link rel="stylesheet" type="text/css" href="assets/styles/application.css">
+
 
   <script src="lib/jquery.js"></script>
   <script src="lib/underscore.js"></script>
   <script src="lib/bootstrap.js"></script>
+  <script src="lib/fuelux.js"></script>
   <script src="lib/loading.js"></script>
   <script src="lib/socket.io.js"></script>
   <script src="lib/moment.js"></script>
@@ -20,11 +23,15 @@
 
   <script src="assets/scripts/helpers/resizing.js"></script>
   <script src="assets/scripts/helpers/timer.js"></script>
-  <!-- // <script src="assets/scripts/helpers/chat.js"></script> -->
+  <script src="assets/scripts/helpers/chat.js"></script>
 
   <script src="assets/scripts/home/home_view.js"></script>
   <script src="assets/scripts/home/home_controller.js"></script>
   <script src="assets/scripts/home/home_app.js"></script>
+
+  <script src="assets/scripts/instructions/instructions_view.js"></script>
+  <script src="assets/scripts/instructions/instructions_controller.js"></script>
+  <script src="assets/scripts/instructions/instructions_app.js"></script>
 
   <script src="assets/scripts/game/models/game_model.js"></script>
   <script src="assets/scripts/game/models/one_player_model.js"></script>
@@ -39,24 +46,6 @@
 
 </head>
 <body>
-
-<nav class="navbar navbar-inverse" role="navigation">
-	<div class="container-fluid">
-    <ul class="nav navbar-nav navbar-left">
-      <li><a href="#OnePlayer"><span class="icon glyphicon glyphicon-user"></span></a></li>
-      <li>
-        <a href="#TwoPlayers"><span class="icon glyphicon glyphicon-user"><span class="icon glyphicon glyphicon-user"></span></span></a>
-      </li>
-      <li>
-        <a href="#TwoPlayersOnline"><span class="icon glyphicon glyphicon-user"></span><span class="icon glyphicon glyphicon-transfer"></span><span class="icon glyphicon glyphicon-user"></span></a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a><span class="icon glyphicon glyphicon-comment"></span></a></li>
-      <li><a href="#"><span class="icon glyphicon glyphicon-share-alt"></span></a></li>
-    </ul>
-	</div>
-</nav>
 
 <div id="main-region"></div>
 

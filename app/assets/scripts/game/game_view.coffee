@@ -9,11 +9,18 @@
       boardRegion:    "#board-region"
 
     onShow: ->
-      $(".navbar-left").hide()
-      $(".navbar-right").show()
+      $(".navbar").show()
+
+    hideChat: ->
+      $(".glyphicon-comment").hide()
+
+    showChat: ->
+      $(".glyphicon-comment").show()
   
   class GameApp.LeftPageView extends Marionette.ItemView
+    template: HAML["app/assets/scripts/game/templates/left_page"] 
   class GameApp.RightPageView extends Marionette.ItemView
+    # template: HAML["app/assets/scripts/game/templates/right_page"] 
   class GameApp.BoardView extends Marionette.ItemView
     template: HAML["app/assets/scripts/game/templates/board"]	
    
@@ -24,12 +31,26 @@
       width = $(window).width() - $("table#main").width()
       minSize = Math.min $(window).height(), $(window).width()
       $("#chat").css "width", width / 5
-      $("#log").css "width", width / 5
       $("td.out").width minSize / 4
       $("td.out").height minSize / 4
       $("td.in").width minSize / 15
       $("td.in").height minSize / 15
-      $("table.main").css "margin-top", "#{($(window).height() - $("table.main").height()) / 2 - $("nav").height()}px"
+      $("table.main").css "margin-top", "#{($(window).height() - $("table.main").height()) / 2}px"
+
+      properation = $(window).height() / $(window).width()
+      if properation > 0.55 and properation < 1.3
+        $("#left-page-region").hide()
+        $("#right-page-region").hide()
+      else
+        $("#left-page-region").show()
+        $("#right-page-region").show()
+        if properation >= 1.3
+          $("#left-page-region").addClass "top"
+          $("#right-page-region").addClass "bottom"
+        else
+          $("#left-page-region").removeClass "top"
+          $("#right-page-region").removeClass "bottom"
+
 
     reset: ->
       $("td").css "background", "none"

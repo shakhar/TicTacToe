@@ -7,7 +7,7 @@
 
     move: (parentLocation, location, status) ->  
       @makeMove parentLocation, location 
-      @printBoard @gameModel.board
+      # @printBoard @gameModel.board
       @changeValidLocation location
       
       setTimeout =>
@@ -54,7 +54,7 @@
       image = if @player is 1 then "smallX" else "smallO"
       hideImage = if @player is 1 then "smallO" else "smallX"
       $('#log #' + hideImage).css 'display', 'none'
-      $('#log #' + image).css 'display', 'visible'
+      $('#log #' + image).css 'display', 'inline'
 
     makeComputerMove: (parentLocation, location) ->
       bestMove = @gameModel.alphaBeta @validLocation
@@ -62,39 +62,42 @@
       location = @gameModel.parseBackLocation bestMove[2], bestMove[3], parentLocation
       @move parentLocation, location, true
 
-    printBoard: (board) ->
-      str = ""
-      for i in [0..2]
-        for j in [0..2]
-          str += "\n"
-          for k in [0..2]
-            str += " "
-            for l in [0..2]
-              val = board.table[i][k].table[j][l].val
-              str += "X" if val is 1
-              str += "Y" if val is -1
-              str += "-" if val is 0
-      console.log str
+    # printBoard: (board) ->
+    #   str = ""
+    #   for i in [0..2]
+    #     for j in [0..2]
+    #       str += "\n"
+    #       for k in [0..2]
+    #         str += " "
+    #         for l in [0..2]
+    #           val = board.table[i][k].table[j][l].val
+    #           str += "X" if val is 1
+    #           str += "Y" if val is -1
+    #           str += "-" if val is 0
+    #   console.log str
 
-    setEvents: ->
+    setBoardEvents: ->
       super
-      $ =>
-        $("td.in").off "click"
-        $("td.in").click (event) =>
-          if @player is 1
-            parentLocation = event.target.parentNode.parentNode.parentNode.parentNode
-            if (@validLocation is true or @sameClasses(@validLocation, parentLocation.className)) and @gameModel.checkLocation(parentLocation, event.target)
-              @boardView.stopAnimationTrigger = true
-              @move parentLocation, event.target
-            else
-              @boardView.invalidAnimation @validLocation
-              $("#Invalid-Modal").modal "show"  if @gameModel.checkLocation(parentLocation, location) and not localStorage["disableInvalidModal"]
+      $("td.in").off "click"
+      $("td.in").click (event) =>
+        if @player is 1
+          parentLocation = event.target.parentNode.parentNode.parentNode.parentNode
+          if (@validLocation is true or @sameClasses(@validLocation, parentLocation.className)) and @gameModel.checkLocation(parentLocation, event.target)
+            @boardView.stopAnimationTrigger = true
+            @move parentLocation, event.target
+          else
+            @boardView.invalidAnimation @validLocation
+            $("#Invalid-Modal").modal "show"  if @gameModel.checkLocation(parentLocation, location) and not localStorage["disableInvalidModal"]
 
-        $("#level-btn-group").click =>
-          @gameModel.difficulty = $("#level-btn-group .active input").attr "id"
+    setLeftPageEvents: ->
+      $("#level-btn-group").click =>
+        @gameModel.difficulty = $("#level-btn-group .active input").attr "id"
+        @reset()
+
+      $("#level-select").click =>
+        unless @gameModel.level is $("#level-select").val()
+          @gameModel.level = $("#level-select").val()
           @reset()
 
-        $("#level-select").click =>
-          unless @gameModel.level is $("#level-select").val()
-            @gameModel.level = $("#level-select").val()
-            @reset()
+    getGameModel: ->
+      new GameApp.OnePlayerModel

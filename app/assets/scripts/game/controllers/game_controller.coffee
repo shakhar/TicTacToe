@@ -6,12 +6,12 @@
       @validLocation = true
       @gameover = false
       @gameModel = @getGameModel()
-      @setEvents()
 
       @region = @options.region
       @layout = @getLayoutView()
 
       @listenTo @layout, "show", =>
+        if @mode is "two_players_online" then @layout.showChat() else @layout.hideChat() 
         @leftPageRegion()
         @rightPageRegion()
         @boardRegion()
@@ -20,19 +20,31 @@
 
     leftPageRegion: ->
       @leftPageView = @getLeftPageView()
+
+      @listenTo @leftPageView, "show", =>
+        @setLeftPageEvents()
+
       @layout.leftPageRegion.show @leftPageView 
 
     rightPageRegion: ->
       @rightPageView = @getRightPageView()
+
+      @listenTo @rightPageView, "show", =>
+        @setTimer?()
+
       @layout.rightPageRegion.show @rightPageView 
 
     boardRegion: ->
       @boardView = @getBoardView()
+
+      @listenTo @boardView, "show", =>
+        @setBoardEvents()
+
       @layout.boardRegion.show @boardView
 
     getLeftPageView: ->
       new GameApp.LeftPageView
-        template: HAML["app/assets/scripts/game/templates/#{@mode}/left_page"]
+        # template: HAML["app/assets/scripts/game/templates/#{@mode}/left_page"]
 
     getRightPageView: ->
       new GameApp.RightPageView
@@ -63,7 +75,7 @@
           image = if @player is 1 then "smallX" else "smallO"
           hideImage = if @player is 1 then "smallO" else "smallX"
           $('#log #' + hideImage).css 'display', 'none'
-          $('#log #' + image).css 'display', 'visible'
+          $('#log #' + image).css 'display', 'inline'
       , 500
 
     reset: ->
@@ -75,7 +87,7 @@
       $("td.in").removeClass "active"
       $("td.in").removeClass "full"
       $("#log #smallO").css "display", "none"
-      $("#log #smallX").css "display", "visible"
+      $("#log #smallX").css "display", "inline"
       $("#log span").text "Turn"
 
     gameOverMessage: (isWin) ->
@@ -85,28 +97,28 @@
       $("td.in").removeClass "active"
       if isWin
         $("#log #" + hideImage).css "display", "none"
-        $("#log #" + image).css "display", "visible"
+        $("#log #" + image).css "display", "inline"
         $("#log span").text "Wins"
       else
         $("#log #" + hideImage).css "display", "none"
         $("#log #" + image).css "display", "none"
-        $("#log #x-tie").css "display", "visible"
-        $("#log #o-tie").css "display", "visible"
+        $("#log #x-tie").css "display", "inline"
+        $("#log #o-tie").css "display", "inline"
         $("#log span").text "Tie"
     
-    setEvents: ->
-      $ =>
-        $("td.in").click (event) =>
-          @handleCellClick event.target
-        
-        $(".disable-invalid").click ->
-          localStorage.setItem "disableInvalidModal", true
-        
-        $(".disable-full").click ->
-          localStorage.setItem "disableFullModal", true
-        
-        $("#new-game-btn").click =>
-          @reset()
+    setBoardEvents: ->
+      $("td.in").click (event) =>
+        @handleCellClick event.target
+      
+      $(".disable-invalid").click ->
+        localStorage.setItem "disableInvalidModal", true
+      
+      $(".disable-full").click ->
+        localStorage.setItem "disableFullModal", true
+      
+    setLeftPageEvents: ->
+      $("#new-game-btn").click =>
+        @reset()
 
     handleCellClick: (location) ->
       unless @gameover

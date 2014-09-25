@@ -4,3 +4,6 @@
     initialize: ->
       @mode = "two_players"
       super
+
+    getGameModel: ->
+      new GameApp.TwoPlayersModel

@@ -34,7 +34,7 @@ class window.Timer
     sec = 60 - ((moment() - @start) / 1000 | 0)
     @digits.s1.attr "class", @digit_to_name[sec / 10 | 0]
     @digits.s2.attr "class", @digit_to_name[sec % 10]
-    @timeOut() if sec < 2
+    @timeOut() if sec < 1
     unless @stop  
       setTimeout =>
         @updateTime()

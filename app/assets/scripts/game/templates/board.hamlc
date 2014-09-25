@@ -1,4 +1,4 @@
-%canvas{ width: "590", height: "590" }
+%canvas
 %table.main
   %tr
     %td.up.left.out
@@ -129,3 +129,5 @@
           %td.down.left.in
           %td.down.center.in
           %td.down.right.in
+
+#loaderImage.loader

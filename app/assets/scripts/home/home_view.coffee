@@ -4,5 +4,4 @@
     template: HAML["app/assets/scripts/home/templates/home_layout"]
 
     onShow: ->
-      $(".navbar-right").hide()
-      $(".navbar-left").show()
+      $(".navbar").hide()
