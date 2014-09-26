@@ -4,7 +4,7 @@ options =
   views:
     path: "dist/app/views"
     engines: 
-      html: "handlebars"
+      html: require("handlebars")
 
 server = Hapi.createServer "0.0.0.0", 3000, options
 
