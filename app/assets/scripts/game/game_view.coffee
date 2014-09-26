@@ -51,7 +51,6 @@
           $("#left-page-region").removeClass "top"
           $("#right-page-region").removeClass "bottom"
 
-
     reset: ->
       $("td").css "background", "none"
       $(".in img").remove()
@@ -90,13 +89,14 @@
       , 300
 
     drawWinningLines: (lines) ->
-      @setCanvas()
       for line in lines
         start = line.start
         end = line.end
         @drawLine start, end
 
     setCanvas: ->
+      $("canvas").attr "width", $("table.main").width() + 10
+      $("canvas").attr "height", $("table.main").height() + 10
       offset = $("table.main").offset()
       $("canvas").offset 
         top: offset.top - 10 

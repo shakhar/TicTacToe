@@ -68,6 +68,7 @@
         isWin = @gameModel.checkBoard @player
         isTie = @gameModel.isFull()
         if isWin or isTie
+          @boardView.setCanvas()
           lines = @gameModel.getWinningLines()
           @boardView.drawWinningLines lines
           @gameOverMessage isWin
