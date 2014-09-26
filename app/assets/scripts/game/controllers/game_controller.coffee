@@ -5,6 +5,7 @@
       @player = 1
       @validLocation = true
       @gameover = false
+      @location = document.location.hash
       @gameModel = @getGameModel()
 
       @region = @options.region
@@ -115,6 +116,11 @@
       
       $(".disable-full").click ->
         localStorage.setItem "disableFullModal", true
+
+      window.onpopstate = (e) =>
+        unless document.location.hash or @gameover
+          unless confirm("Do you really want to quit in the middle of the game?")
+            document.location.hash = @location
       
     setLeftPageEvents: ->
       $("#new-game-btn").click =>
