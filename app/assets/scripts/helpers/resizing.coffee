@@ -1,7 +1,4 @@
-$(window).resize ->
-  width = $(window).width() - $("table#main").width()
-  $("#chat").css "width", width / 5
-  
+$(window).resize ->  
   minSize = Math.min $(window).height(), $(window).width()
   $("td.out").width minSize / 4
   $("td.out").height minSize / 4
@@ -9,14 +6,6 @@ $(window).resize ->
   $("td.in").height minSize / 15
 
   $("table.main").css "margin-top", "#{($(window).height() - $("table.main").height()) / 2}px"
-
-  # $("canvas").width $("table.main").width()
-  # $("canvas").height $("table.main").height()
-  # offset = $("table.main").offset()
-  # if offset?
-  #   $("canvas").offset 
-  #     top: offset.top - 10 
-  #     left: offset.left - 10
 
   properation = $(window).height() / $(window).width()
   if properation > 0.55 and properation < 1.3

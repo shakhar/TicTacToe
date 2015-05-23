@@ -12,7 +12,6 @@
       @layout = @getLayoutView()
 
       @listenTo @layout, "show", =>
-        if @mode is "two_players_online" then @layout.showChat() else @layout.hideChat() 
         @leftPageRegion()
         @rightPageRegion()
         @boardRegion()
@@ -45,7 +44,7 @@
 
     getLeftPageView: ->
       new GameApp.LeftPageView
-        # template: HAML["app/assets/scripts/game/templates/#{@mode}/left_page"]
+        template: HAML["app/assets/scripts/game/templates/#{@mode}/left_page"]
 
     getRightPageView: ->
       new GameApp.RightPageView
@@ -89,8 +88,6 @@
       $("td.in").removeClass "active"
       $("td.in").removeClass "full"
       $("#log #smallO").css "display", "none"
-      $("#log #smallX").css "display", "inline"
-      $("#log span").text "Turn"
 
     gameOverMessage: (isWin) ->
       image = if @player is 1 then "smallX" else "smallO"
@@ -104,25 +101,26 @@
       else
         $("#log #" + hideImage).css "display", "none"
         $("#log #" + image).css "display", "none"
-        $("#log #x-tie").css "display", "inline"
-        $("#log #o-tie").css "display", "inline"
+        $("#log #tie").css "display", "inline"
         $("#log span").text "Tie"
     
     setBoardEvents: ->
       $("td.in").click (event) =>
         @handleCellClick event.target
-      
-      $(".disable-invalid").click ->
-        localStorage.setItem "disableInvalidModal", true
-      
-      $(".disable-full").click ->
-        localStorage.setItem "disableFullModal", true
 
       window.onpopstate = (e) =>
-        unless document.location.hash or @gameover
+        unless document.location.hash or @gameover or @gameModel.isEmpty()
           unless confirm("Do you really want to quit in the middle of the game?")
             document.location.hash = @location
-      
+          else
+            @gameover = true
+            @socket?.emit "disconnect"
+            @socket?.disconnect()
+        else unless document.location.hash
+          @socket.stopWaiting()
+          @socket?.emit "disconnect"
+          @socket?.disconnect()
+          
     setLeftPageEvents: ->
       $("#new-game-btn").click =>
         @reset()
@@ -139,7 +137,6 @@
             $("." + @validLocation.split(" ").join(".") + " td").addClass "full"
             $("td.full").removeClass "active"
             @validLocation = true
-            $("#Full-Modal").modal "show" if localStorage["disableFullModal"] is "false"
           else
             $("." + @validLocation.split(" ").join(".") + " td").addClass "active"
           @boardView.stopAnimationTrigger = true
@@ -147,7 +144,6 @@
           return true
         else
           @boardView.invalidAnimation @validLocation
-          $("#Invalid-Modal").modal "show"  if @gameModel.checkLocation(parentLocation, location) and localStorage["disableInvalidModal"] is "false" 
       return false
 
     nextLocation: (location) ->

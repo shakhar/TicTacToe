@@ -5,5 +5,10 @@
       @mode = "two_players"
       super
 
+    reset: ->
+      super
+      $("#log #smallX").css "display", "inline"
+      $("#log span").text "Turn"
+
     getGameModel: ->
       new GameApp.TwoPlayersModel

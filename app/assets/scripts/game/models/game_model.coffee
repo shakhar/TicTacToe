@@ -50,6 +50,15 @@
           return false if (location? or not @isFull(0, cell.table)) and cell.val is 0
       return true
 
+    isEmpty: ->
+      for boardRow in @board.table
+        for subBoard in boardRow
+          return false if subBoard.val
+          for subBoardRow in subBoard.table
+            for cell in subBoardRow
+              return false if cell.val
+      return true 
+
     parseBackLocation: (x, y, parentLocation) ->
       parsedBackLocation = Array()
       switch x
@@ -132,7 +141,12 @@
           end =
             x: end.position().left + end.width() - 10
             y: end.position().top + end.width() / 2 
-        else if board[0][i].val is board[1][i].val is board[2][i].val is winner
+          
+          lines.push 
+            start: start 
+            end: end
+        
+        if board[0][i].val is board[1][i].val is board[2][i].val is winner
           start = $(@parseBackLocation 0, i)
           end = $(@parseBackLocation 2, i)
           start = 
@@ -141,12 +155,10 @@
           end =
             x: end.position().left + end.width() / 2
             y: end.position().top + end.width() - 10 
-        else
-          continue
-
-        lines.push 
-          start: start 
-          end: end
+          
+          lines.push 
+            start: start 
+            end: end
 
       if board[0][0].val is board[1][1].val is board[2][2].val is winner
         start = $(@parseBackLocation 0, 0)

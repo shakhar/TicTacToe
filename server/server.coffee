@@ -30,38 +30,22 @@ tempSocket = null
 io.sockets.on "connection", (socket) ->
   if tempSocket
     connections.push [tempSocket, socket]
+    tempSocket.emit "stopWaiting"
     tempSocket.emit "setPlayer", 1
     socket.emit "setPlayer", -1
     tempSocket = null
   else
     tempSocket = socket
+    socket.emit "waiting"
 
   socket.on "addUser", (username) ->
     if username
       socket.username = username
-      socket.emit "updateChat", null, "You have connected as #{socket.username}", "green"
       connectedSocket = findConnectedSocket socket
-      if connectedSocket
-        socket.emit "updateChat", null, "#{connectedSocket.username} has connected", "green", true, true
-        connectedSocket.emit "updateChat", null, "#{socket.username} has connected", "green", true
-      else
-        socket.emit "updateChat", null, "Waiting for opponent's connection...", "blue"
     else
       socket.username = "Guest#{counter}"
-      socket.emit "updateChat", null, "You have connected as Guest#{counter}", "green"
       counter++
       connectedSocket = findConnectedSocket socket
-      if connectedSocket
-        socket.emit "updateChat", null, "#{connectedSocket.username} has connected", "green", true, true
-        connectedSocket.emit "updateChat", null, "#{socket.username} has connected", "green", true
-      else
-        socket.emit "updateChat", null, "Waiting for opponent's connection...", "blue"
-
-  socket.on "sendChat", (message) ->
-    connectedSocket = findConnectedSocket socket
-    if connectedSocket
-      connectedSocket.emit "updateChat", socket.username, message, "yellow"
-      socket.emit "updateChat", "Me", message, "orange"
 
   socket.on "updateOpponent", (parentLocation, location) ->
     connectedSocket = findConnectedSocket socket
@@ -72,19 +56,14 @@ io.sockets.on "connection", (socket) ->
     if tempSocket is socket
       tempSocket = null
     connectedSocket = removeConnectionSocket socket
-    if connectedSocket
-      connectedSocket.emit "updateChat", null, "#{socket.username} has disconnected", "red", false
     if tempSocket
       connections.push [tempSocket, connectedSocket]
-      tempSocket.emit "setPlayer", 1
-      connectedSocket.emit "setPlayer", -1
-      tempSocket.emit "updateChat", null, "#{connectedSocket.username} has connected", "green", true, true
-      connectedSocket.emit "updateChat", null, "#{tempSocket.username} has connected", "green", true
+      tempSocket.emit "resetPlayer", 1
+      connectedSocket.emit "resetPlayer", -1
       tempSocket = null
     else
       tempSocket = connectedSocket
-      if connectedSocket
-        connectedSocket.emit "updateChat", null, "Waiting for opponent's connection...", "blue"
+      tempSocket?.emit "waiting"
 
 findConnectedSocket = (socket) ->
   for connection in connections

@@ -5,65 +5,59 @@
       super
       @validLocation = true
       @difficulty = "easy"
-      @level = 1
+      @level = 5
 
     reset: ->
       super
       @validLocation = true
 
     alphaBeta: (validLocation) ->
-      @movesLeft = 1000000
+      @movesLeft = Infinity
       if validLocation is true
         @validLocation = true
       else
         @validLocation = @parseLocation validLocation
-      @maxValue this, -100000, 100000, true, 1
+      @maxValue this, -Infinity, Infinity, true, 1
 
-    maxValue: (state, alpha, beta, isFirst, level) ->
-      isFirst = isFirst or false
+    maxValue: (state, alpha, beta, isFirst = false, level) ->
       if state.isTerminal level
         score = state.boardScore()
         score *= (8 - level) if Math.abs score is 10000
         return score 
-      v = -100000
+      v = -Infinity
       moves = state.getMoves()
       bestMove = moves[0]
       for move in moves
-        min = @minValue(state.getNext(move, "max"), alpha, beta, false, level + 1)
-        if min > v
-          v = min
-          bestMove = move
-        if v >= beta
-          return move if isFirst
-          return v
-        alpha = v if v > alpha
-      if isFirst
-        return bestMove
-      else
-        return v
+        unless @isFullBoard(@board.table[move[2]][move[3]].table)
+          min = @minValue(state.getNext(move, "max"), alpha, beta, false, level + 1)
+          if min > v
+            v = min
+            bestMove = move
+          if v >= beta
+            return move if isFirst
+            return v
+          alpha = v if v > alpha
+      if isFirst then bestMove else v
 
-    minValue: (state, alpha, beta, isFirst, level) ->
-      isFirst = isFirst or false
+    minValue: (state, alpha, beta, isFirst = false, level) ->
       if state.isTerminal(level)
         score = state.boardScore()
         score *= (8 - level) if Math.abs score is 10000
         return score 
-      v = 100000
+      v = Infinity
       moves = state.getMoves()
       bestMove = moves[0]
       for move in moves
-        max = @maxValue(state.getNext(move, "min"), alpha, beta, false, level + 1)
-        if max < v
-          v = max
-          bestMove = moves
-        if v <= alpha
-          return move if isFirst
-          return v
-        beta = v if v < beta
-      if isFirst
-        return bestMove
-      else
-        return v
+        unless @isFullBoard(@board.table[move[2]][move[3]].table)
+          max = @maxValue(state.getNext(move, "min"), alpha, beta, false, level + 1)
+          if max < v
+            v = max
+            bestMove = moves
+          if v <= alpha
+            return move if isFirst
+            return v
+          beta = v if v < beta
+      if isFirst then bestMove else v
 
     subBoardScore: (location) ->
       nextBoard = @board.table[location[0]][location[1]]
@@ -246,3 +240,9 @@
             else
               score += sum
       return score
+
+    isFullBoard: (board) ->
+      for row in board
+        for cell in row
+          return false unless cell.val
+      return true

@@ -130,4 +130,4 @@
           %td.down.center.in
           %td.down.right.in
 
-#loaderImage.loader
+%i#loaderImage.fa.fa-spinner.fa-pulse.fa-5x.fa-fw

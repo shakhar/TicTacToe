@@ -7,18 +7,9 @@
       leftPageRegion: "#left-page-region"
       rightPageRegion: "#right-page-region"
       boardRegion:    "#board-region"
-
-    onShow: ->
-      $(".navbar").show()
-
-    hideChat: ->
-      $(".glyphicon-comment").hide()
-
-    showChat: ->
-      $(".glyphicon-comment").show()
   
   class GameApp.LeftPageView extends Marionette.ItemView
-    template: HAML["app/assets/scripts/game/templates/left_page"] 
+    # template: HAML["app/assets/scripts/game/templates/left_page"] 
   class GameApp.RightPageView extends Marionette.ItemView
     # template: HAML["app/assets/scripts/game/templates/right_page"] 
   class GameApp.BoardView extends Marionette.ItemView
@@ -28,9 +19,7 @@
       @stopAnimationTrigger = false
 
     onShow: ->
-      width = $(window).width() - $("table#main").width()
       minSize = Math.min $(window).height(), $(window).width()
-      $("#chat").css "width", width / 5
       $("td.out").width minSize / 4
       $("td.out").height minSize / 4
       $("td.in").width minSize / 15

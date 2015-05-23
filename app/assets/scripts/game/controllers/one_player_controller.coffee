@@ -7,9 +7,7 @@
 
     move: (parentLocation, location, status) ->  
       @makeMove parentLocation, location 
-      # @printBoard @gameModel.board
       @changeValidLocation location
-      
       setTimeout =>
         isWin = @gameModel.checkBoard @player
         isTie = @gameModel.isFull()
@@ -22,12 +20,17 @@
           @changePlayer()
         setTimeout =>
           unless status? or @gameover
-            startLoading()
+            $("#loaderImage").show()
             @makeComputerMove parentLocation, location
           else
-            stopLoading()
+            $("#loaderImage").hide()
         , 100
       , 500
+
+    reset: ->
+      super
+      $("#log #smallX").css "display", "inline"
+      $("#log span").text "Turn"
 
     makeMove: (parentLocation, location) ->
       @boardView.changeBoard location, @player, false
@@ -48,8 +51,7 @@
       $("." + @validLocation.split(" ").join(".") + " td").addClass "full"
       $("td.full").removeClass "active"
       @validLocation = true
-      $("#Full-Modal").modal "show" unless localStorage["disableFullModal"]
-      
+            
     changePlayer: ->
       @player = if @player is 1 then -1 else 1
       image = if @player is 1 then "smallX" else "smallO"
@@ -63,20 +65,6 @@
       location = @gameModel.parseBackLocation bestMove[2], bestMove[3], parentLocation
       @move parentLocation, location, true
 
-    # printBoard: (board) ->
-    #   str = ""
-    #   for i in [0..2]
-    #     for j in [0..2]
-    #       str += "\n"
-    #       for k in [0..2]
-    #         str += " "
-    #         for l in [0..2]
-    #           val = board.table[i][k].table[j][l].val
-    #           str += "X" if val is 1
-    #           str += "Y" if val is -1
-    #           str += "-" if val is 0
-    #   console.log str
-
     setBoardEvents: ->
       super
       $("td.in").off "click"
@@ -88,7 +76,6 @@
             @move parentLocation, event.target
           else
             @boardView.invalidAnimation @validLocation
-            $("#Invalid-Modal").modal "show"  if @gameModel.checkLocation(parentLocation, location) and not localStorage["disableInvalidModal"]
 
     setLeftPageEvents: ->
       $("#level-btn-group").click =>

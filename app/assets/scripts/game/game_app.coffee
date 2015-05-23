@@ -8,13 +8,15 @@
 
   API =
     onePlayer: ->
-      new GameApp.OnePlayerController
+      delete @controller
+      @controller = new GameApp.OnePlayerController
         region: App.mainRegion
     twoPlayers: ->
-      new GameApp.TwoPlayersController
+      @controller = new GameApp.TwoPlayersController
         region: App.mainRegion
     twoPlayersOnline: ->
-      new GameApp.TwoPlayersOnlineController
+      delete @controller
+      @controller = new GameApp.TwoPlayersOnlineController
         region: App.mainRegion
 
   App.addInitializer ->

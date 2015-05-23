@@ -1,6 +1,5 @@
 #log
-  %img#x-tie{ style: "display: none", src: "assets/images/smallX.png" }
-  %img#o-tie{ style: "display: none", src: "assets/images/smallO.png" }
+  %img#tie{ style: "display: none", src: "assets/images/tie.png" }
   %img#smallX{ src: "assets/images/smallX.png" }
   %img#smallO{ style: "display: none", src: "assets/images/smallO.png" }
   %span Turn

@@ -5,7 +5,7 @@
       @autoClicked = false
       @playerNum = 0
       @mode = "two_players_online"
-      @socket = new Chat().start this
+      @socket = new Connect().start this
       super
 
     setTimer: ->
@@ -15,17 +15,20 @@
       super
       @playerNum = 0
       @autoClicked = false
-      stopLoading()
+      $("#loaderImage").hide()
       @timer.stopTimer()
       $("#timer").hide()
       $("#player").hide()
+      $("#log img").hide()
 
     gameOverMessage: (isWin) ->
       super isWin
-      stopLoading()
+      $("#loaderImage").hide()
       @timer.stopTimer()
       $("#timer").hide()
       $("#player").hide()
+      @socket.emit "disconnect"
+      @socket.disconnect()
 
     setBoardEvents: ->
       super
@@ -44,11 +47,11 @@
           parentLocation = location.parentNode.parentNode.parentNode.parentNode
           @socket.emit "updateOpponent", parentLocation.className, location.className if @player is @playerNum
           if @autoClicked
-            stopLoading()
+            $("#loaderImage").hide()
             @timer.stopTimer()
             @timer.startTimer() 
           else 
-            startLoading()
+            $("#loaderImage").show()
             @timer.startTimer()
       @autoClicked = false if @autoClicked
 
