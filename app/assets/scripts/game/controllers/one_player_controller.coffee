@@ -8,6 +8,7 @@
     move: (parentLocation, location, status) ->  
       @makeMove parentLocation, location 
       @changeValidLocation location
+      $("#loaderImage").show()
       setTimeout =>
         isWin = @gameModel.checkBoard @player
         isTie = @gameModel.isFull()
@@ -19,11 +20,10 @@
         else
           @changePlayer()
         setTimeout =>
-          unless status? or @gameover
-            $("#loaderImage").show()
-            @makeComputerMove parentLocation, location
-          else
+          if status? or @gameover
             $("#loaderImage").hide()
+          else
+            @makeComputerMove parentLocation, location
         , 100
       , 500
 

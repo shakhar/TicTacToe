@@ -1,9 +1,9 @@
 %article
   %h1 Instructions
   %section
-    %span 1. Each turn, you mark one of the small squares.
+    %span 1. Each turn, you choose one of the small cells.
   %section
-    %span 2. When you get three in a row on a small board, you have won that board.
+    %span 2. When you get three in a row on a small board, you win that board.
     %br
     %img{src: "assets/images/instructions2.png"}
   %section
@@ -11,16 +11,16 @@
     %br
     %img{src: "assets/images/instructions3.png"}
   %section
-    %span 4. Your opponent determined which of the nine boards you will play by choosing the board position in the small board.
+    %span 4. Your opponent decides in which of the nine small boards you will play in your next turn, by choosing the board position in the small board.
     %br
     %img{src: "assets/images/instructions4.png"}
   %section
-    %span 5. The first player can choose any of the nine boards to play.
+    %span 5. The first player can choose any of the nine small boards to play.
   %section
-    %span 6. If your opponent send you to a board that already won, you can continue marking the empty spots in it.
+    %span 6. If your opponent send you to a board that already won, you can continue choose the empty cells in it.
     %br
     %img{src: "assets/images/instructions6.png"}
   %section
-    %span 7. If your opponent send you to a board that is full, you can choose any empty spot you like on any of the other boards.
+    %span 7. If your opponent send you to a board that is full, you can choose any empty cell you like on any of the other small boards.
     %br
     %img{src: "assets/images/instructions7.png"}

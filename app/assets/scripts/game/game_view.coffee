@@ -9,9 +9,7 @@
       boardRegion:    "#board-region"
   
   class GameApp.LeftPageView extends Marionette.ItemView
-    # template: HAML["app/assets/scripts/game/templates/left_page"] 
   class GameApp.RightPageView extends Marionette.ItemView
-    # template: HAML["app/assets/scripts/game/templates/right_page"] 
   class GameApp.BoardView extends Marionette.ItemView
     template: HAML["app/assets/scripts/game/templates/board"]	
    
@@ -39,6 +37,11 @@
         else
           $("#left-page-region").removeClass "top"
           $("#right-page-region").removeClass "bottom"
+          
+      $("#loaderImage").css "top", $(window).height()/2 - $("#loaderImage").height()/2
+      $("#loaderImage").css "left", $(window).width()/2 - $("#loaderImage").width()/2
+
+      $("#timer").css "width", "#{$(".flip").outerWidth()*14/3}px"
 
     reset: ->
       $("td").css "background", "none"

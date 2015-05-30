@@ -5,7 +5,7 @@
       super
       @validLocation = true
       @difficulty = "easy"
-      @level = 5
+      @level = 6
 
     reset: ->
       super

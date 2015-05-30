@@ -20,3 +20,8 @@ $(window).resize ->
     else
       $("#left-page-region").removeClass "top"
       $("#right-page-region").removeClass "bottom"
+
+  $("#loaderImage").css "top", $(window).height()/2 - $("#loaderImage").height()/2
+  $("#loaderImage").css "left", $(window).width()/2 - $("#loaderImage").width()/2
+
+  $("#timer").css "width", "#{$(".flip").outerWidth()*14/3}px"

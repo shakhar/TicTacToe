@@ -36,7 +36,9 @@ class window.Connect
       $("#log span").text "Turn"
       controller.playerNum = num
       $("#loaderImage").show() if num is -1
-      controller.timer.startTimer()
+      $("#timer").show()
+      controller.timer.setTime 61
+      controller.timer.start()
 
     socket.on "resetPlayer", (num) ->
       socket.stopWaiting()
@@ -45,7 +47,9 @@ class window.Connect
       $("#smallX").show()
       $("#log span").text "Turn"
       $("#loaderImage").show() if num is -1
-      controller.timer.startTimer()
+      $("#timer").show()
+      controller.timer.setTime 61
+      controller.timer.start()
 
     socket.on "connect_failed", ->
       console.log "connect_failed"
