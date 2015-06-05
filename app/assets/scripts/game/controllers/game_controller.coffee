@@ -110,9 +110,12 @@
 
       window.onpopstate = (e) =>
         unless document.location.hash or @gameover or @gameModel.isEmpty()
-          unless confirm("Do you really want to quit in the middle of the game?")
-            document.location.hash = @location
-          else
+          hash = document.location.hash
+          document.location.hash = @location
+          $("#exit-modal").modal "show"
+          $(".yes-btn").click =>
+            window.onpopstate = null
+            document.location.hash = hash
             @gameover = true
             @socket?.emit "disconnect"
             @socket?.disconnect()
