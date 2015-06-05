@@ -8,24 +8,22 @@
     move: (parentLocation, location, status) ->  
       @makeMove parentLocation, location 
       @changeValidLocation location
-      $("#loaderImage").show()
-      setTimeout =>
-        isWin = @gameModel.checkBoard @player
-        isTie = @gameModel.isFull()
-        if isWin or isTie
-          @boardView.setCanvas()
-          lines = @gameModel.getWinningLines()
-          @boardView.drawWinningLines lines
-          @gameOverMessage isWin
+      $("#loaderImage").show() unless status?
+      isWin = @gameModel.checkBoard @player
+      isTie = @gameModel.isFull()
+      if isWin or isTie
+        @boardView.setCanvas()
+        lines = @gameModel.getWinningLines()
+        @boardView.drawWinningLines lines
+        @gameOverMessage isWin
+      else
+        @changePlayer()
+        if status? or @gameover
+          $("#loaderImage").hide()
         else
-          @changePlayer()
-        setTimeout =>
-          if status? or @gameover
-            $("#loaderImage").hide()
-          else
+          setTimeout =>
             @makeComputerMove parentLocation, location
-        , 100
-      , 500
+          , 1000
 
     reset: ->
       super
@@ -38,9 +36,10 @@
         @boardView.changeBoard parentLocation, @player, true
 
     changeValidLocation: (location) ->
-      $("td.in").removeClass "active"
-      $("." + @validLocation.split(" ").join(".") + " td").addClass "full"  if @validLocation isnt true and @gameModel.isFull(@validLocation)
       @validLocation = @nextLocation location
+      validLocation = @validLocation 
+      $("td.in").removeClass "active"
+      $("." + validLocation.split(" ").join(".") + " td").addClass "full"  if @validLocation isnt true and @gameModel.isFull(@validLocation)
       if @gameModel.isFull(@validLocation) and not @gameModel.isFull()
         @showValidationError()
       else

@@ -44,9 +44,10 @@
 
     handleCellClick: (location) ->
       if @playerNum is @player or @autoClicked
+        player = @player
         if super location, this
           parentLocation = location.parentNode.parentNode.parentNode.parentNode
-          @socket.emit "updateOpponent", parentLocation.className, location.className if @player is @playerNum
+          @socket.emit "updateOpponent", parentLocation.className, location.className if player is @playerNum
           if @autoClicked
             $("#loaderImage").hide()
             @timer.stop()

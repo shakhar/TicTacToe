@@ -63,21 +63,19 @@
       @boardView.changeBoard location, @player, false
       if @gameModel.changeBoard parentLocation, location, @player
         @boardView.changeBoard parentLocation, @player, true  
-      setTimeout =>
-        isWin = @gameModel.checkBoard @player
-        isTie = @gameModel.isFull()
-        if isWin or isTie
-          @boardView.setCanvas()
-          lines = @gameModel.getWinningLines()
-          @boardView.drawWinningLines lines
-          @gameOverMessage isWin
-        else
-          @player = if @player is 1 then -1 else 1
-          image = if @player is 1 then "smallX" else "smallO"
-          hideImage = if @player is 1 then "smallO" else "smallX"
-          $('#log #' + hideImage).css 'display', 'none'
-          $('#log #' + image).css 'display', 'inline'
-      , 500
+      isWin = @gameModel.checkBoard @player
+      isTie = @gameModel.isFull()
+      if isWin or isTie
+        @boardView.setCanvas()
+        lines = @gameModel.getWinningLines()
+        @boardView.drawWinningLines lines
+        @gameOverMessage isWin
+      else
+        @player = if @player is 1 then -1 else 1
+        image = if @player is 1 then "smallX" else "smallO"
+        hideImage = if @player is 1 then "smallO" else "smallX"
+        $('#log #' + hideImage).css 'display', 'none'
+        $('#log #' + image).css 'display', 'inline'
 
     reset: ->
       @gameModel.reset()
@@ -120,7 +118,7 @@
             @socket?.emit "disconnect"
             @socket?.disconnect()
         else unless document.location.hash
-          @socket.stopWaiting()
+          @socket?.stopWaiting()
           @socket?.emit "disconnect"
           @socket?.disconnect()
           
