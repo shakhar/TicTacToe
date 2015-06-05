@@ -37,10 +37,10 @@
 
     gameOverMessage: (isWin) ->
       super isWin
-      $("#loaderImage").hide()
+      $("#loaderImage").remove()
       @timer.stop()
-      $("#timer").hide()
-      $("#player").hide()
+      $("#timer").remove()
+      $("#player").remove()
 
     handleCellClick: (location) ->
       if @playerNum is @player or @autoClicked
